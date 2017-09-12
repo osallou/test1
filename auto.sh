@@ -11,15 +11,16 @@ do
     if [ $curfile == "Dockerfile" ]
     then
         echo "PLUGIN_DOCKERFILE=$p" > DRONE_ENV
-        major=`sed -n 's/.*\ssoftware.version="\(.*\)"/\1/p' $p`
-        minor=`sed -n 's/.*\sversion="\(.*\)"/\1/p' $p`
+        major=`sed -n 's/.*\ssoftware.version="\(.*\)"\s*\\\*/\1/p' $p`
+        minor=`sed -n 's/.*\sversion="\(.*\)"\s*\\\*/\1/p' $p`
         version=$major-$minor
+        echo "## $version ==> $minor"
         if [ "$minor" == "" ]
         then
             version=$major
         fi
-        software=`sed -n 's/.*\ssoftware="\(.*\)"/\1/p' $p`
-        if [ $version == "-" ]
+        software=`sed -n 's/.*\ssoftware="\(.*\)"\s*\\\*/\1/p' $p`
+        if [ "$version" == "-" ]
         then
             echo "Could not extract version from Dockerfile: $p"
             exit 1

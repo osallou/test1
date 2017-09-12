@@ -4,6 +4,6 @@ LABEL version="2" \
   software.version="1.4.2" \
   software="test1"
 
-RUN echo "test build subdir payload 20"
+RUN echo "test build subdir payload 21"
 RUN apt-get update
 RUN apt-get install -y curl
