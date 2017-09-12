@@ -16,6 +16,7 @@ pipeline:
   notify:
     image: drillster/drone-email
     host: 192.168.1.247
+    port: 25
     skip_verify: true
     from: drone@genouest.org
     recipients: [ olivier.sallou@irisa.fr ]
