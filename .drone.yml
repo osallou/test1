@@ -4,7 +4,7 @@ pipeline:
     commands:
       - python3 test.py
   prepare:
-    image: python:3.6.2-strech
+    image: python:3.6.2-stretch
     commands:
       - bash auto.sh
   docker:
