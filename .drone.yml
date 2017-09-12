@@ -5,5 +5,7 @@ pipeline:
       - python3 test.py
   docker:
     image: plugins/docker
+    environment:
+      - PLUGIN_DRY_RUN=1
     repo: osallou/test1
     dockerfile: Dockerfile
