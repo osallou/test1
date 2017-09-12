@@ -16,7 +16,7 @@ pipeline:
   updatesite:
     image: plugins/webhook
     urls:
-      - http:/192.168.100.43:5001/hook
+      - http://192.168.100.43:5001/hook
   notify:
     image: drillster/drone-email
     host: 192.168.1.247
