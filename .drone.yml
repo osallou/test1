@@ -12,5 +12,4 @@ pipeline:
     environment:
       - PLUGIN_DRY_RUN=1
       - PLUGIN_ENV_FILE=DRONE_ENV
-    repo: osallou/test1
     dockerfile: Dockerfile
