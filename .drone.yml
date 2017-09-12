@@ -13,3 +13,12 @@ pipeline:
       - PLUGIN_DRY_RUN=1
       - PLUGIN_ENV_FILE=DRONE_ENV
     dockerfile: Dockerfile
+  notify:
+    image: drillster/drone-email
+    host: 192.168.1.247
+    skip_verify: true
+    from: drone@genouest.org
+    recipients: [ olivier.sallou@irisa.fr ]
+    recipients_only: true
+    when:
+      status: [ changed, failure ]
