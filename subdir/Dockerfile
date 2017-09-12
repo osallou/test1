@@ -1,5 +1,5 @@
 FROM debian
 
-RUN echo "test build subdir payload 17"
+RUN echo "test build subdir payload 18"
 RUN apt-get update
 RUN apt-get install -y curl
