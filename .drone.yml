@@ -13,6 +13,9 @@ pipeline:
       - PLUGIN_DRY_RUN=1
       - PLUGIN_ENV_FILE=DRONE_ENV
     dockerfile: Dockerfile
+  updatesite:
+    webhook:
+      urls: http:/192.168.100.43:5001/hook
   notify:
     image: drillster/drone-email
     host: 192.168.1.247
