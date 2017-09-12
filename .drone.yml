@@ -3,9 +3,14 @@ pipeline:
     image: python:3.6.2-stretch
     commands:
       - python3 test.py
+  prepare:
+    image: python:3.6.2-strech
+    commands:
+      - bash auto.sh
   docker:
     image: plugins/docker
     environment:
       - PLUGIN_DRY_RUN=1
+      - PLUGIN_ENV_FILE=DRONE_ENV
     repo: osallou/test1
     dockerfile: Dockerfile
