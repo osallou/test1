@@ -13,8 +13,8 @@ do
         echo "PLUGIN_DOCKERFILE=$p" > DRONE_ENV
         major=`sed -n 's/.*\ssoftware.version="\(.*\)"/\1/p' $p`
         minor=`sed -n 's/.*\sversion="\(.*\)"/\1/p' $p`
-        version=$major-minor
-        if [ $minor == "" ]
+        version=$major-$minor
+        if [ "$minor" == "" ]
         then
             version=$major
         fi
