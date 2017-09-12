@@ -21,4 +21,4 @@ pipeline:
     recipients: [ olivier.sallou@irisa.fr ]
     recipients_only: true
     when:
-      status: [ changed, failure ]
+      status: [ success, changed, failure ]
