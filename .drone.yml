@@ -1,0 +1,5 @@
+pipeline:
+  build:
+    image: python:3.6.2-stretch
+    commands:
+      - python3 test.py
