@@ -32,7 +32,7 @@ with open('site/biocontainers/' + container + '.md', 'w') as contpage:
     contpage.write('---\nlayout: home\ntitle: '+container+'\n---\n')
     contpage.write('# '+container+'\n')
     contpage.write(' blabla \n')
-    contpage.write('site.categories: container '+container +'\n')
+    contpage.write('site.categories: '+container +'\n')
     contpage.write('<ul>')
     contpage.write('{% for post in site.categories.'+container+' %}')
     contpage.write('{% if post.url %}')
@@ -43,7 +43,7 @@ with open('site/biocontainers/' + container + '.md', 'w') as contpage:
 
 
 with open('site/biocontainers/_posts/' + post_date + '-' + container + '_' + dfp.labels['software.version'] + '.md', 'w') as contpage:
-    contpage.write('---\nlayout: post\ntitle: '+container+'_'+dfp.labels['software.version']+'\ncategories: '+container+'\n---\n')
+    contpage.write('---\nlayout: post\ntitle: '+container+'_'+dfp.labels['software.version']+'\ncategories: container '+container+'\n---\n')
     contpage.write('# '+container+'\n')
     contpage.write(' blabla version '+dfp.labels['software.version']+'\n')
     contpage.write('## tags\n')
