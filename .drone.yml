@@ -14,11 +14,11 @@ pipeline:
       - PLUGIN_ENV_FILE=DRONE_ENV
     dockerfile: Dockerfile
   test:
-    image: python:3.6.2-stretch
+    image: docker:17.05.0-ce-dind
     commands:
       - echo ${PWD}
       - ls -l
-      - . ./DRONE_ENV && echo $PLUGIN_TAG && docker run --rm python:3.6.2-stretch echo hello
+      - . ./DRONE_ENV && echo $PLUGIN_TAG && /usr/local/bin/dockerdocker run --rm python:3.6.2-stretch echo hello
   updatesite:
     image: plugins/webhook
     urls:
