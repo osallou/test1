@@ -17,7 +17,7 @@ pipeline:
     image: docker:17.05.0-ce-dind
     privileged: true
     commands:
-      - test.sh python:3.6.2-stretch
+      - ./test.sh python:3.6.2-stretch
   updatesite:
     image: plugins/webhook
     urls:
