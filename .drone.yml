@@ -18,7 +18,7 @@ pipeline:
     commands:
       - echo ${PWD}
       - ls -l
-      - . ./DRONE_ENV && echo $PLUGIN_TAG && /usr/local/bin/dockerdocker run --rm python:3.6.2-stretch echo hello
+      - . ./DRONE_ENV && /usr/local/bin/docker run --rm python:3.6.2-stretch echo hello $PLUGIN_TAG
   updatesite:
     image: plugins/webhook
     urls:
