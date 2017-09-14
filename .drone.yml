@@ -1,3 +1,7 @@
+services:
+  docker:
+    image: docker:17.05.0-ce-dind
+    privileged: true
 pipeline:
   sample:
     image: python:3.6.2-stretch
@@ -7,10 +11,6 @@ pipeline:
     image: python:3.6.2-stretch
     commands:
       - bash auto.sh
-  pretest:
-    image: docker:17.05.0-ce-dind
-    commands:
-      - /usr/local/bin/dockerd --data-root /var/lib/docker && . ./DRONE_ENV && /usr/local/bin/docker run --rm python:3.6.2-stretch echo hello $PLUGIN_TAG
   docker:
     image: plugins/docker
     environment:
