@@ -16,10 +16,7 @@ pipeline:
   test:
     image: docker:17.05.0-ce-dind
     commands:
-      - /usr/local/bin/dockerd -g /var/lib/docker
-      - echo ${PWD}
-      - ls -l
-      - . ./DRONE_ENV && /usr/local/bin/docker run --rm python:3.6.2-stretch echo hello $PLUGIN_TAG
+      - /usr/local/bin/dockerd --data-root /var/lib/docker && . ./DRONE_ENV && /usr/local/bin/docker run --rm python:3.6.2-stretch echo hello $PLUGIN_TAG
   updatesite:
     image: plugins/webhook
     urls:
