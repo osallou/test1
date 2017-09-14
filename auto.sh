@@ -8,6 +8,7 @@ while read p
 do
     echo "Check $p"
     curfile=`basename $p`
+    dirfile=`dirname $p`
     if [ $curfile == "Dockerfile" ]
     then
         echo "PLUGIN_DOCKERFILE=$p" > DRONE_ENV
@@ -27,6 +28,7 @@ do
         fi
         echo "PLUGIN_TAG=$version" >> DRONE_ENV
         echo "PLUGIN_REPO=osallou/$software" >> DRONE_ENV
+        echo "BIOCONTAINER_DIR=$dirfile" >> DRONE_ENV
     fi
 
 done < /tmp/out
