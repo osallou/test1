@@ -38,7 +38,7 @@ def payload():
                     commit['added'] = []
                     commit['modified'] = [modif]
                     commit['removed'] = []
-                    commit['message'] = 'Update ' + container_dir
+                    commit['message'] = container_dir + ':' + commit['message']
                     container_dir = '/'.join(modif.split('/')[:-1])
                     commit_dict = copy.deepcopy(payload)
                     commit_dict['commits'] = [commit]

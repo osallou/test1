@@ -1,5 +1,5 @@
 pipeline:
-  test:
+  sample:
     image: python:3.6.2-stretch
     commands:
       - python3 test.py
@@ -13,6 +13,10 @@ pipeline:
       - PLUGIN_DRY_RUN=1
       - PLUGIN_ENV_FILE=DRONE_ENV
     dockerfile: Dockerfile
+  test:
+    image: python:3.6.2-stretch
+    commands:
+      - . DRONE_ENV && echo $PLUGIN_TAG && docker run --rm python:3.6.2-stretch echo hello
   updatesite:
     image: plugins/webhook
     urls:

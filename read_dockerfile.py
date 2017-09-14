@@ -12,7 +12,7 @@ msg = {'build': {'tag': '', 'ref': 'refs/heads/master', 'author': 'osallou', 'ev
 + git reset --hard -q c294672dc0586004d70efaa76c31b71f03337a1f
 + git submodule update --init --recursive
 '''
-container = msg['build']['message'].replace('Update ','')
+container = msg['build']['message'].split(':')[0].strip()
 
 content = None
 with open('test1/'+container+'/Dockerfile', 'r') as content_file:
