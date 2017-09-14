@@ -16,6 +16,8 @@ pipeline:
   test:
     image: python:3.6.2-stretch
     commands:
+      - echo ${PWD}
+      - ls -l
       - . DRONE_ENV && echo $PLUGIN_TAG && docker run --rm python:3.6.2-stretch echo hello
   updatesite:
     image: plugins/webhook
