@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 . ./DRONE_ENV
-if [ -e $BIOCONTAINER_DIR/test.sh ]; then
+echo "check for ./$BIOCONTAINER_DIR/test.sh"
+if [ -e ./$BIOCONTAINER_DIR/test.sh ]; then
     /usr/local/bin/dockerd --data-root /var/lib/docker &
     echo "Wait for docker daemon"
     sleep 10
