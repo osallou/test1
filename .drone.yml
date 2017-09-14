@@ -17,7 +17,7 @@ pipeline:
     image: docker:17.05.0-ce-dind
     privileged: true
     commands:
-      - /usr/local/bin/dockerd --data-root /var/lib/docker && . ./DRONE_ENV && /usr/local/bin/docker run --rm python:3.6.2-stretch echo hello $PLUGIN_TAG
+      - test.sh python:3.6.2-stretch
   updatesite:
     image: plugins/webhook
     urls:
