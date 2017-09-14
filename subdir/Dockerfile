@@ -5,6 +5,6 @@ LABEL version="2" \
   software="conttest1" \
   tags="proto"
 
-RUN echo "test build subdir payload 60"
+RUN echo "test build subdir payload 61"
 RUN apt-get update
 RUN apt-get install -y curl
