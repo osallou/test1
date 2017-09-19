@@ -4,6 +4,7 @@ set -e
 
 echo "Check modified files"
 git show --name-status $DRONE_COMMIT_SHA | grep '^[MA]\s'  | sed -e 's/^[MA]\s*//g' | while read i; do echo $i ; done > /tmp/out
+IS_DOCKER_FILE=0
 while read p
 do
     echo "Check $p"
@@ -11,6 +12,7 @@ do
     dirfile=`dirname $p`
     if [ $curfile == "Dockerfile" ]
     then
+        IS_DOCKER_FILE=1
         echo "PLUGIN_DOCKERFILE=$p" > DRONE_ENV
         major=`sed -n 's/.*\ssoftware.version="\(.*\)"\s*\\\*/\1/p' $p`
         minor=`sed -n 's/.*\sversion="\(.*\)"\s*\\\*/\1/p' $p`
@@ -31,9 +33,13 @@ do
         echo "BIOCONTAINER_DIR=$dirfile" >> DRONE_ENV
     else
         echo "No Dockerfile here, skipping"
-        exit 1
     fi
 
+if [ $IS_DOCKER_FILE == 0 ]
+then
+    echo "No Dockerfile found"
+    exit 1
+fi
 done < /tmp/out
 rm -f /tmp/out
 cat DRONE_ENV
