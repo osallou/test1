@@ -4,6 +4,7 @@ set -e
 
 echo "Check modified files"
 git show --name-status $DRONE_COMMIT_SHA | grep '^[MA]\s'  | sed -e 's/^[MA]\s*//g' | while read i; do echo $i ; done > /tmp/out
+cat /tmp/out
 IS_DOCKER_FILE=0
 while read p
 do
