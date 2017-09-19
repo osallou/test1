@@ -36,11 +36,13 @@ do
         echo "No Dockerfile here, skipping"
     fi
 
+done < /tmp/out
+
 if [ $IS_DOCKER_FILE == 0 ]
 then
     echo "No Dockerfile found"
     exit 1
 fi
-done < /tmp/out
+
 rm -f /tmp/out
 cat DRONE_ENV
