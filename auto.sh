@@ -27,8 +27,11 @@ do
             exit 1
         fi
         echo "PLUGIN_TAG=$version" >> DRONE_ENV
-        echo "PLUGIN_REPO=osallou/$software" >> DRONE_ENV
+        echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
         echo "BIOCONTAINER_DIR=$dirfile" >> DRONE_ENV
+    else
+        echo "No Dockerfile here, skipping"
+        exit 1
     fi
 
 done < /tmp/out
