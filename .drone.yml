@@ -5,6 +5,8 @@ pipeline:
       - python3 test.py
       - cat /etc/hosts
       - curl -v https://openstack-192-168-100-43.genouest.org/v1/_ping
+      - echo $docker_username
+      - echo $docker_password
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
   prepare:
