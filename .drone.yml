@@ -18,6 +18,7 @@ pipeline:
     environment:
       # - PLUGIN_DRY_RUN=1
       - PLUGIN_ENV_FILE=DRONE_ENV
+      - DOCKER_LAUNCH_DEBUG=true
     dockerfile: Dockerfile
     custom_dns: 192.168.100.43
     extra_hosts:
