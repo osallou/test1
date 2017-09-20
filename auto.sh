@@ -32,7 +32,7 @@ do
         echo "PLUGIN_TAG=$version" >> DRONE_ENV
         echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
         echo "BIOCONTAINER_DIR=$dirfile" >> DRONE_ENV
-        echo "PLUGIN_REGISTRY=openstack-192-168-100-43.genouest.org"
+        echo "PLUGIN_REGISTRY=openstack-192-168-100-43.genouest.org" >> DRONE_ENV
     else
         echo "No Dockerfile here, skipping"
     fi
