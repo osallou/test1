@@ -24,6 +24,13 @@ do
             version=$major
         fi
         software=`sed -n 's/.*\ssoftware="\(.*\)"\s*\\\*/\1/p' $p`
+        container=`sed -n 's/.*\scontainer="\(.*\)"\s*\\\*/\1/p' $p`
+        if [ "$container" == "" ]
+        then
+            echo "no container name, use software name"
+        else
+            software=$container
+        fi
         if [ "$version" == "-" ]
         then
             echo "Could not extract version from Dockerfile: $p"
