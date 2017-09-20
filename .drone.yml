@@ -5,8 +5,6 @@ pipeline:
       - python3 test.py
       - cat /etc/hosts
       - curl -v https://openstack-192-168-100-43.genouest.org/v1/_ping
-      - echo $DOCKER_USERNAME
-      - echo $DOCKER_PASSWORD
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
   prepare:
@@ -18,13 +16,11 @@ pipeline:
     environment:
       # - PLUGIN_DRY_RUN=1
       - PLUGIN_ENV_FILE=DRONE_ENV
-      - DOCKER_USERNAME=$docker_username
-      - DOCKER_PASSWORD=$docker_password
     dockerfile: Dockerfile
     custom_dns: 192.168.100.43
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
-    # secrets: [ docker_username, docker_password ]
+    secrets: [ docker_username, docker_password ]
   test:
     image: docker:17.05.0-ce-dind
     privileged: true
