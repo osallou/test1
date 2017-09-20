@@ -13,14 +13,6 @@ pipeline:
     image: python:3.6.2-stretch
     commands:
       - bash auto.sh
-  pretest:
-    image: docker:17.05.0-ce-dind
-    privileged: true
-    commands:
-      - ./test.sh
-    extra_hosts:
-        - "openstack-192-168-100-43.genouest.org:192.168.100.1"
-    secrets: [test_username, test_password]
   docker:
     image: plugins/docker
     environment:
