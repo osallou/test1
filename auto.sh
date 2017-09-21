@@ -36,6 +36,7 @@ do
             echo "Could not extract version from Dockerfile: $p"
             exit 1
         fi
+        echo "DOCKERFILE=$p" >> DRONE_ENV
         echo "PLUGIN_TAG=$version" >> DRONE_ENV
         echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
         echo "BIOCONTAINER_DIR=$dirfile" >> DRONE_ENV

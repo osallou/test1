@@ -31,6 +31,12 @@ pipeline:
       - ./test.sh
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
+  callupdate:
+    image:
+    environment:
+        - BIOCONTAINERS_URL=http://192.168.100.43:3001/hook
+    commands:
+        - . ./DRONE_ENV && python notify.py
   updatesite:
     image: plugins/webhook
     urls:
