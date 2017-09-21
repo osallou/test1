@@ -10,13 +10,6 @@ pipeline:
     image: python:3.6.2-stretch
     commands:
       - bash auto.sh
-  callupdate:
-    image: python:3.6.2-stretch
-    environment:
-        - BIOCONTAINERS_URL=http://192.168.100.43:3001/hook
-    commands:
-        - pip install dockerfile-parse requests
-        - . ./DRONE_ENV && python notify.py $DOCKERFILE
   docker:
     image: plugins/docker
     environment:
@@ -42,6 +35,13 @@ pipeline:
     image: plugins/webhook
     urls:
       - http://192.168.100.43:3001/hook
+  callwebupdate:
+    image: python:3.6.2-stretch
+    environment:
+        - BIOCONTAINERS_URL=http://192.168.100.43:3001/hook
+    commands:
+        - pip install dockerfile-parse requests
+        - . ./DRONE_ENV && python notify.py $DOCKERFILE
   notify:
     image: drillster/drone-email
     host: 192.168.100.43
