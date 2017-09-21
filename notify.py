@@ -28,7 +28,7 @@ dfp = DockerfileParser()
 dfp.content = content
 
 msg['container']['labels'] = dfp.labels
-
+print('Send: '+str(msg))
 r = requests.post(os.environ['BIOCONTAINERS_URL'], json = msg)
 if r.status_code == 200:
     print(r.text)
