@@ -21,7 +21,7 @@ msg = {
 
 
 content = None
-with open(os.environ['DOCKERFILE'], 'r') as content_file:
+with open(sys.argv[1], 'r') as content_file:
         content = content_file.read()
 
 dfp = DockerfileParser()
