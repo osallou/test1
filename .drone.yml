@@ -6,12 +6,6 @@ pipeline:
       - cat /etc/hosts
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
-  check:
-      image: debian
-      commands:
-          - apt-get update
-          - apt-get install -y dnsutils
-          - dig @192.168.100.43 openstack-192-168-100-43.genouest.org
   prepare:
     image: python:3.6.2-stretch
     commands:
@@ -22,6 +16,7 @@ pipeline:
       # - PLUGIN_DRY_RUN=1
       - PLUGIN_ENV_FILE=DRONE_ENV
       - DOCKER_LAUNCH_DEBUG=true
+      - GODEBUG=netdns=cgo
     dockerfile: Dockerfile
     custom_dns: 192.168.100.43
     extra_hosts:
