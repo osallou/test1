@@ -4,23 +4,18 @@ pipeline:
     commands:
       - python3 test.py
       - cat /etc/hosts
-      - curl -v https://openstack-192-168-100-43.genouest.org/v1/_ping
-      - echo $${MYSECRET}
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
-    secrets: [mysecret]
+  check:
+      image: debian
+      commands:
+          - apt-get update
+          - apt-get install dnsutils
+          - dig @192.168.100.43 openstack-192-168-100-43.genouest.org
   prepare:
     image: python:3.6.2-stretch
     commands:
       - bash auto.sh
-  pretest:
-    image: docker:17.05.0-ce-dind
-    privileged: true
-    commands:
-      - ./test.sh
-    extra_hosts:
-        - "openstack-192-168-100-43.genouest.org:192.168.100.1"
-    secrets: [test_username, test_password]
   docker:
     image: plugins/docker
     environment:
