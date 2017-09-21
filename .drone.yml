@@ -37,8 +37,8 @@ pipeline:
       - http://192.168.100.43:3001/hook
   notify:
     image: drillster/drone-email
-    host: 192.168.1.247
-    port: 25
+    host: 192.168.100.43
+    port: 1025
     skip_verify: true
     from: drone@genouest.org
     recipients: [ olivier.sallou@irisa.fr ]
