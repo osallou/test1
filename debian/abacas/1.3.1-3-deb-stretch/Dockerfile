@@ -1,12 +1,13 @@
 FROM biocontainers/biocontainers:debian-stretch-backports
 MAINTAINER bioshadock <support@genouest.org>
-LABEL    software="abacas" \ 
-    container="abacas" \ 
-    description="Algorithm Based Automatic Contiguation of Assembled Sequences" \ 
-    website="http://abacas.sourceforge.net/" \ 
-    software.version="1.3.1-3-deb-stretch" \ 
-    binaries="/usr/bin/abacas" \ 
-    tags="field::biology, field::biology:bioinformatics, implemented-in::perl,:commandline,:text-mode, role::program,:utility" 
+LABEL    software="abacas" \
+    container="abacas" \
+    description="Algorithm Based Automatic Contiguation of Assembled Sequences" \
+    website="http://abacas.sourceforge.net/" \
+    software.version="1.3.1-3-deb-stretch" \
+    version="1" \
+    binaries="/usr/bin/abacas" \
+    tags="field::biology, field::biology:bioinformatics, implemented-in::perl,:commandline,:text-mode, role::program,:utility"
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y abacas && apt-get clean && apt-get purge && rm -rf /var/lib/apt/lists/* /tmp/*

@@ -25,6 +25,8 @@ pipeline:
   test:
     image: docker:17.05.0-ce-dind
     privileged: true
+    environment:
+        - GODEBUG=netdns=cgo
     commands:
       - ./test.sh
     extra_hosts:
