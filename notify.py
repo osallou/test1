@@ -4,13 +4,19 @@ from dockerfile_parse import DockerfileParser
 import requests
 import json
 
+if 'DRONE_PULL_REQUEST' not in os.environ:
+    os.environ['DRONE_PULL_REQUEST'] = None
+
 msg = {
     'build':{
         'author': os.environ['DRONE_COMMIT_AUTHOR'],
         'created': os.environ['DRONE_BUILD_CREATED'],
         'message': os.environ['DRONE_COMMIT_MESSAGE'],
         'number': os.environ['DRONE_BUILD_NUMBER'],
-        'commit': os.environ['DRONE_COMMIT_SHA']
+        'commit': os.environ['DRONE_COMMIT_SHA'],
+        'branch': os.environ['DRONE_COMMIT_BRANCH'],
+        'job': os.environ['DRONE_JOB_NUMBER'],
+        'pull_request': os.environ['DRONE_PULL_REQUEST']
     },
     'repo':{
         'owner': os.environ['DRONE_REPO_OWNER'],
@@ -18,6 +24,9 @@ msg = {
     },
     'container': {}
 }
+
+if os.environ['DRONE_PULL_REQUEST']:
+    print("WARN: this is a pull request %s" % (str(os.environ['DRONE_PULL_REQUEST'])))
 
 
 content = None
