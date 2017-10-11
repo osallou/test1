@@ -10,6 +10,19 @@ pipeline:
     image: python:3.6.2-stretch
     commands:
       - bash auto.sh
+
+  checkspec:
+    image: python:3.6.2-stretch
+    environment:
+        - BIOCONTAINERS_URL=http://192.168.100.43:3001/hook
+    commands:
+        - pip install dockerfile-parse requests
+        - . ./DRONE_ENV && python container_spec_check.py $DOCKERFILE
+    custom_dns: 192.168.100.43
+    extra_hosts:
+        - "openstack-192-168-100-43.genouest.org:192.168.100.1"
+    secrets: [github_status_token]
+	
   docker:
     image: plugins/docker
     environment:
