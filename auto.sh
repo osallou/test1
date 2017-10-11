@@ -36,9 +36,17 @@ do
             echo "Could not extract version from Dockerfile: $p"
             exit 1
         fi
+        if [ "$DRONE_BUILD_EVENT" == "pull_request" ] || [ "$DRONE_BRANCH" != "master"]
+        then
+            version = "dev-${version}"
+            # Here could use local registry
+            echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
+        else
+            # Here could send to dockerhub
+            echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
+        fi
         echo "DOCKERFILE=$p" >> DRONE_ENV
         echo "PLUGIN_TAG=$version" >> DRONE_ENV
-        echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
         echo "BIOCONTAINER_DIR=$dirfile" >> DRONE_ENV
         echo "PLUGIN_REGISTRY=openstack-192-168-100-43.genouest.org" >> DRONE_ENV
         if [ "$DRONE_BUILD_EVENT" == "pull_request" ]

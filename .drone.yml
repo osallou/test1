@@ -22,7 +22,7 @@ pipeline:
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
     secrets: [github_status_token]
-	
+
   docker:
     image: plugins/docker
     environment:
@@ -35,6 +35,7 @@ pipeline:
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
     secrets: [docker_username, docker_password]
+
   test:
     image: docker:17.05.0-ce-dind
     privileged: true
@@ -44,10 +45,7 @@ pipeline:
       - ./test.sh
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
-  updatesite:
-    image: plugins/webhook
-    urls:
-      - http://192.168.100.43:3001/hook
+
   callwebupdate:
     image: python:3.6.2-stretch
     environment:
@@ -55,6 +53,9 @@ pipeline:
     commands:
         - pip install dockerfile-parse requests
         - . ./DRONE_ENV && python notify.py $DOCKERFILE
+    when:
+        branch: master
+
   notify:
     image: drillster/drone-email
     host: 192.168.100.43
@@ -65,3 +66,4 @@ pipeline:
     recipients_only: true
     when:
       status: [ success, changed, failure ]
+      branch: master
