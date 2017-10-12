@@ -9,7 +9,7 @@ pipeline:
   prepare:
     image: python:3.6.2-stretch
     commands:
-      - bash auto.sh
+      - bash ./ci/auto.sh
 
   checkspec:
     image: python:3.6.2-stretch
@@ -17,7 +17,7 @@ pipeline:
         - BIOCONTAINERS_URL=http://192.168.100.43:3001/hook
     commands:
         - pip install dockerfile-parse requests
-        - . ./DRONE_ENV && python container_spec_check.py $DOCKERFILE
+        - . ./DRONE_ENV && python ci/container_spec_check.py $DOCKERFILE
     custom_dns: 192.168.100.43
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
@@ -42,7 +42,7 @@ pipeline:
     environment:
         - GODEBUG=netdns=cgo
     commands:
-      - ./test.sh
+      - bash ./ci/test.sh
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
 
@@ -52,7 +52,7 @@ pipeline:
         - BIOCONTAINERS_URL=http://192.168.100.43:3001/hook
     commands:
         - pip install dockerfile-parse requests
-        - . ./DRONE_ENV && python notify.py $DOCKERFILE
+        - . ./DRONE_ENV && python ./ci/notify.py $DOCKERFILE
     when:
         branch: master
 
