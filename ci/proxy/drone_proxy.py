@@ -14,6 +14,10 @@ drone_url = 'http://localhost:8000'
 if 'DRONE_URL' in os.environ:
     drone_url = os.environ['DRONE_URL']
 
+@app.route('/ping', methods=['GET'])
+def ping():
+    return "pong"
+
 @app.route('/hook', methods=['POST'])
 def payload():
         # print(request.content_type)
@@ -28,6 +32,8 @@ def payload():
                 modified_commits = []
                 updated = False
                 for modified in commit['added']:
+                    if modified.startswith('ci'):
+                        continue
                     if modified.startswith('.drone.yml'):
                         drone_modified = True
                     container_path = '/'.join(modified.split('/')[:-1])
@@ -35,6 +41,8 @@ def payload():
                         modified_container.append(container_path + '/Dockerfile')
                         updated = True
                 for modified in commit['modified']:
+                    if modified.startswith('ci'):
+                        continue
                     if modified.startswith('.drone.yml'):
                         drone_modified = True
                     container_path = '/'.join(modified.split('/')[:-1])
