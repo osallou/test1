@@ -91,12 +91,12 @@ if os.environ['DRONE_BUILD_EVENT'] == 'pull_request' or os.environ['DRONE_BRANCH
     is_pull_or_dev = True
     version = 'dev-' + version
 
-with open(docker_file, 'a') as content_file:
+with open('DRONE_ENV', 'a') as content_file:
     content_file.write('\nPLUGIN_TAG=' + version + '\n')
 
 send_status(software, status, msg)
 
-with open(docker_file, 'r') as content_file:
+with open('DRONE_ENV', 'r') as content_file:
     content = content_file.read()
     logging.warn(content)
 
