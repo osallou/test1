@@ -82,9 +82,9 @@ if 'license' not in labels or not labels['license']:
     status = False
     msg.append('license label not present')
 
-version = labels['software.version']
+version = labels['software.version'].strip()
 if 'version' in labels and labels['version']:
-    version = version + '-' + labels['version']
+    version = version + '-' + labels['version'].strip()
 
 is_pull_or_dev = False
 if os.environ['DRONE_BUILD_EVENT'] == 'pull_request' or os.environ['DRONE_BRANCH'] != 'master':
