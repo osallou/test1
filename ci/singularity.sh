@@ -22,5 +22,5 @@ echo "Convert docker image to singularity image"
 mkdir -p ci/img
 #export SINGULARITY_MESSAGELEVEL=-3
 #export PYTHONIOENCODING=UTF-8
-echo "/usr/local/bin/singularity -q build ci/img/$SOFTWARE_NAME_$PLUGIN_TAG.img Singularity"
-/usr/local/bin/singularity -q build ci/img/$SOFTWARE_NAME_$PLUGIN_TAG.img Singularity
+echo "/usr/local/bin/singularity -q build ci/img/${SOFTWARE_NAME}_${PLUGIN_TAG}.img Singularity"
+/usr/local/bin/singularity -q build ci/img/${SOFTWARE_NAME}_${PLUGIN_TAG}.img Singularity
