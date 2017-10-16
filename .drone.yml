@@ -52,7 +52,7 @@ pipeline:
     environment:
         - GODEBUG=netdns=cgo
     commands:
-      - bash ./ci/test.sh
+      - sh ./ci/test.sh
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
     when:

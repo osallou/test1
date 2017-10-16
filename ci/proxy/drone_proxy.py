@@ -18,7 +18,7 @@ if 'DRONE_URL' in os.environ:
 def payload():
         # print(request.content_type)
         # print(str(request.form))
-        logging.error(request.form)
+        # logging.error(request.form)
         try:
             payload = json.loads(request.form.get('payload'))
             commits = []
