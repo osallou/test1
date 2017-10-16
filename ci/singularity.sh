@@ -17,4 +17,5 @@ cd singularity && ./autogen.sh && ./configure --prefix=/usr/local --sysconfdir=/
 echo "Bootstrap: docker" > singularity
 echo "From: $PLUGIN_REPO:$PLUGIN_TAG" >> singularity
 
-singulariy build $SOFTWARE_NAME_$PLUGIN_TAG.img Singularity
+mkdir -p ci/img
+singulariy build ci/img/$SOFTWARE_NAME_$PLUGIN_TAG.img Singularity
