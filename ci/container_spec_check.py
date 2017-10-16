@@ -17,7 +17,7 @@ def send_status(software, status, msg=None):
     if status is False:
         is_success = 'failure'
     headers = {
-        'Accept': 'application/vnd.github.v3+json'
+        'Accept': 'application/vnd.github.v3+json',
         'Authorization': 'token ' + str(os.env['GITHUB_STATUS_TOKEN'])
     }
     try:
