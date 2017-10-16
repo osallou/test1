@@ -20,5 +20,6 @@ echo "From: $PLUGIN_REPO:$PLUGIN_TAG" >> Singularity
 cat Singularity
 
 mkdir -p ci/img
-export SINGULARITY_MESSAGELEVEL=-3
+# export SINGULARITY_MESSAGELEVEL=-3
+export PYTHONIOENCODING=UTF-8
 /usr/local/bin/singularity build ci/img/$SOFTWARE_NAME_$PLUGIN_TAG.img Singularity
