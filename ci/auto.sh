@@ -38,7 +38,7 @@ do
         fi
         if [ "$DRONE_BUILD_EVENT" == "pull_request" ] || [ "$DRONE_BRANCH" != "master"]
         then
-            version = "dev-$version"
+            version="dev-$version"
             # Here could use local registry
             echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
         else
