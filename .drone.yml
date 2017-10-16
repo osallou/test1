@@ -4,8 +4,11 @@ pipeline:
     commands:
       - python3 test.py
       - cat /etc/hosts
+      - echo "$DOCKER_USERNAME $DOCKER_PASSWORD"
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
+    secrets: [docker_username, docker_password]
+
   prepare:
     image: python:3.6.2-stretch
     commands:
