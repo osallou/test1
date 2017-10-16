@@ -82,6 +82,17 @@ if 'license' not in labels or not labels['license']:
     status = False
     msg.append('license label not present')
 
+version = labels['software.version']
+if 'version' in labels and labels['version']:
+    version = version + '-' + labels['version']
+
+is_pull_or_dev = False
+if os.environ['DRONE_BUILD_EVENT'] == 'pull_request' or os.environ['DRONE_BRANCH'] != 'master':
+    is_pull_or_dev = True
+    version = 'dev-' + version
+
+with open(docker_file, 'a') as content_file:
+    content_file.write('\nPLUGIN_TAG=' + version + '\n')
 
 send_status(software, status, msg)
 

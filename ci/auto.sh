@@ -15,14 +15,14 @@ do
     then
         IS_DOCKER_FILE=1
         echo "PLUGIN_DOCKERFILE=$p" > DRONE_ENV
-        major=`sed -n 's/.*\ssoftware.version="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
-        minor=`sed -n 's/.*\sversion="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
-        version=$major-$minor
-        echo "## $version ==> $minor"
-        if [ "$minor" == "" ]
-        then
-            version=$major
-        fi
+        #major=`sed -n 's/.*\ssoftware.version="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
+        #minor=`sed -n 's/.*\sversion="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
+        #version=$major-$minor
+        #echo "## $version ==> $minor"
+        #if [ "$minor" == "" ]
+        #then
+        #    version=$major
+        #fi
         software=`sed -n 's/.*\ssoftware="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
         container=`sed -n 's/.*\scontainer="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
         if [ "$container" == "" ]
@@ -31,14 +31,14 @@ do
         else
             software=$container
         fi
-        if [ "$version" == "-" ]
-        then
-            echo "Could not extract version from Dockerfile: $p"
-            exit 1
-        fi
+        #if [ "$version" == "-" ]
+        #then
+        #    echo "Could not extract version from Dockerfile: $p"
+        #    exit 1
+        #fi
         if [ "$DRONE_BUILD_EVENT" == "pull_request" ] || [ "$DRONE_BRANCH" != "master"]
         then
-            version="dev-$version"
+            #version="dev-$version"
             # Here could use local registry
             echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
         else
@@ -46,7 +46,7 @@ do
             echo "PLUGIN_REPO=openstack-192-168-100-43.genouest.org/osallou/$software" >> DRONE_ENV
         fi
         echo "DOCKERFILE=$p" >> DRONE_ENV
-        echo "PLUGIN_TAG=$version" >> DRONE_ENV
+        #echo "PLUGIN_TAG=$version" >> DRONE_ENV
         echo "BIOCONTAINER_DIR=$dirfile" >> DRONE_ENV
         echo "PLUGIN_REGISTRY=openstack-192-168-100-43.genouest.org" >> DRONE_ENV
         if [ "$DRONE_BUILD_EVENT" == "pull_request" ]
