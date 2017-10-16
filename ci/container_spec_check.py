@@ -22,7 +22,7 @@ def send_status(software, status, msg=None):
     }
     try:
         github_url = 'https://api.github.com/repos/%s/statuses/%s' % (repo, commit)
-        requests.post(
+        res = requests.post(
             github_url,
             json={
                 'description': info,
@@ -31,6 +31,7 @@ def send_status(software, status, msg=None):
             },
             headers=headers
         )
+        logging.warn('Send status info at %s: %s' % (github_url, str(res.status_code)))
     except Exception as e:
         logging.exception(str(e))
 
