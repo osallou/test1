@@ -1,7 +1,7 @@
 FROM biocontainers/biocontainers:debian-stretch-backports
 MAINTAINER bioshadock <support@genouest.org>
 LABEL    software="abacas" \ 
-    version="26" \
+    version="27" \
     container="abacas" \ 
     description="FOR TESTING - Algorithm Based Automatic Contiguation of Assembled Sequences" \ 
     website="this is a test/" \ 
