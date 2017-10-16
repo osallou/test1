@@ -18,7 +18,7 @@ echo "Bootstrap: docker" > Singularity
 echo "From: $PLUGIN_REPO:$PLUGIN_TAG" >> Singularity
 
 cat Singularity
-
+echo "Convert docker image to singularity image"
 mkdir -p ci/img
 #export SINGULARITY_MESSAGELEVEL=-3
 #export PYTHONIOENCODING=UTF-8
