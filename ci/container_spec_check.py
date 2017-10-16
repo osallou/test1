@@ -97,7 +97,7 @@ with open(docker_file, 'a') as content_file:
 send_status(software, status, msg)
 
 with open(docker_file, 'r') as content_file:
-        content = content_file.read()
+    content = content_file.read()
 	logging.warn(content)
 
 if not status:
