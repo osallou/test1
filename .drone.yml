@@ -59,15 +59,15 @@ pipeline:
       branch: master
 
 
-  callwebupdate:
-    image: python:3.6.2-stretch
-    environment:
-        - BIOCONTAINERS_URL=http://192.168.100.43:3001/hook
-    commands:
-        - pip install dockerfile-parse requests
-        - . ./DRONE_ENV && python ./ci/notify.py $DOCKERFILE
-    when:
-        branch: master
+  #callwebupdate:
+  #  image: python:3.6.2-stretch
+  #  environment:
+  #      - BIOCONTAINERS_URL=http://192.168.100.43:3001/hook
+  #  commands:
+  #      - pip install dockerfile-parse requests
+  #      - . ./DRONE_ENV && python ./ci/notify.py $DOCKERFILE
+  #  when:
+  #      branch: master
 
   notify:
     image: drillster/drone-email
