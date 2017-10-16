@@ -6,7 +6,7 @@ import logging
 import re
 
 def send_status(software, status, msg=None):
-    repo = os.environ['DRONE_REPO_NAME']
+    repo = os.environ['DRONE_REPO']
     commit = os.environ['DRONE_COMMIT_SHA']
     info = 'Checking recipe metadata'
     if msg:
