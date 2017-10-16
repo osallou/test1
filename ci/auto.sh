@@ -52,7 +52,7 @@ do
         if [ "$DRONE_BUILD_EVENT" == "pull_request" ]
         then
             echo -e "\033[0;31mWARN:\033[0 this is a pull request, push as dev- image"
-            echo "PLUGIN_DRY_RUN=1" >> DRONE_ENV
+            # echo "PLUGIN_DRY_RUN=1" >> DRONE_ENV
         fi
     else
         echo "No Dockerfile here, skipping"
