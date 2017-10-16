@@ -10,6 +10,9 @@ pipeline:
     image: python:3.6.2-stretch
     commands:
       - bash ./ci/auto.sh
+    when:
+      branch: master
+
 
   checkspec:
     image: python:3.6.2-stretch
@@ -22,6 +25,9 @@ pipeline:
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
     secrets: [github_status_token]
+    when:
+      branch: master
+
 
   docker:
     image: plugins/docker
@@ -35,6 +41,9 @@ pipeline:
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
     secrets: [docker_username, docker_password]
+    when:
+      branch: master
+
 
   test:
     image: docker:17.05.0-ce-dind
@@ -45,6 +54,9 @@ pipeline:
       - bash ./ci/test.sh
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
+    when:
+      branch: master
+
 
   callwebupdate:
     image: python:3.6.2-stretch
