@@ -65,7 +65,7 @@ pipeline:
       - bash ci/singularity.sh 
     when:
       branch: master
-      event: [push, tag, deployment]
+      event: [pull_request, push, tag, deployment]
 
   s3:
     image: plugins/s3
@@ -75,6 +75,8 @@ pipeline:
     path_style: true
     endpoint: http://192.168.100.43:9000
     secrets: [AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY]
+    when:
+      branch: master
 
   #callwebupdate:
   #  image: python:3.6.2-stretch
