@@ -59,7 +59,7 @@ pipeline:
       branch: master
 
   singularity:
-    image: debian
+    image: osallou/singularity
     privileged: true
     commands:
       - bash ci/singularity.sh 
