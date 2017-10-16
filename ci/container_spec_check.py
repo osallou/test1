@@ -98,7 +98,7 @@ send_status(software, status, msg)
 
 with open(docker_file, 'r') as content_file:
     content = content_file.read()
-	logging.warn(content)
+    logging.warn(content)
 
 if not status:
     sys.exit(1)
