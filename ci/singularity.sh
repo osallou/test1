@@ -18,4 +18,4 @@ echo "Bootstrap: docker" > singularity
 echo "From: $PLUGIN_REPO:$PLUGIN_TAG" >> singularity
 
 mkdir -p ci/img
-singulariy build ci/img/$SOFTWARE_NAME_$PLUGIN_TAG.img Singularity
+/usr/local/bin/singulariy build ci/img/$SOFTWARE_NAME_$PLUGIN_TAG.img Singularity
