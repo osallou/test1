@@ -93,6 +93,7 @@ if os.environ['DRONE_BUILD_EVENT'] == 'pull_request' or os.environ['DRONE_BRANCH
 
 with open('DRONE_ENV', 'a') as content_file:
     content_file.write('\nPLUGIN_TAG=' + version + '\n')
+    content_file.write('SOFTWARE_NAME=' + labels['software'] + '\n')
 
 send_status(software, status, msg)
 
