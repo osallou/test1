@@ -3,8 +3,8 @@ MAINTAINER bioshadock <support@genouest.org>
 LABEL    software="abacas" \ 
     version="40" \
     container="abacas" \ 
-    description=" FOR TESTING - Algorithm Based Automatic Contiguation of Assembled Sequences" \ 
-    website="this is a test/" \ 
+    description="FOR TESTING - Algorithm Based Automatic Contiguation of Assembled Sequences" \ 
+    website="this  is a test/" \ 
     software.version="1.3.1-3-deb-stretch" \ 
     copyright="© 2008-10 Genome Research Limited. All Rights Reserved." \ 
     license="GPL-2+" \ 
