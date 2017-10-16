@@ -63,6 +63,7 @@ pipeline:
     privileged: true
     commands:
       - bash ci/singularity.sh 
+    custom_dns: 192.168.100.43
     extra_hosts:
         - "openstack-192-168-100-43.genouest.org:192.168.100.1"
     when:
