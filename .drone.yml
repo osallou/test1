@@ -63,6 +63,8 @@ pipeline:
     privileged: true
     commands:
       - bash ci/singularity.sh 
+    extra_hosts:
+        - "openstack-192-168-100-43.genouest.org:192.168.100.1"
     when:
       branch: master
       event: [pull_request, push, tag, deployment]
