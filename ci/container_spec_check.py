@@ -6,8 +6,8 @@ import logging
 import re
 
 def send_status(software, status, msg=None):
-    repo = os.env['DRONE_REPO_NAME']
-    commit = os.env['DRONE_COMMIT_SHA']
+    repo = os.environ['DRONE_REPO_NAME']
+    commit = os.environ['DRONE_COMMIT_SHA']
     info = 'Checking recipe metadata'
     if msg:
         info = ', '.join(msg)
@@ -18,7 +18,7 @@ def send_status(software, status, msg=None):
         is_success = 'failure'
     headers = {
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token ' + str(os.env['GITHUB_STATUS_TOKEN'])
+        'Authorization': 'token ' + str(os.environ['GITHUB_STATUS_TOKEN'])
     }
     try:
         github_url = 'https://api.github.com/repos/%s/statuses/%s' % (repo, commit)
@@ -35,7 +35,7 @@ def send_status(software, status, msg=None):
         logging.exception(str(e))
 
 docker_file = None
-if len(sys.argv>1) && sys.argv[1]:
+if len(sys.argv) > 1 and sys.argv[1]:
     docker_file = sys.argv[1]
 
 if not docker_file or not os.path.exists(docker_file):
