@@ -15,16 +15,16 @@ do
     then
         IS_DOCKER_FILE=1
         echo "PLUGIN_DOCKERFILE=$p" > DRONE_ENV
-        major=`sed -n 's/.*\ssoftware.version="\(.*\)"\s*\\\*/\1/p' $p`
-        minor=`sed -n 's/.*\sversion="\(.*\)"\s*\\\*/\1/p' $p`
+        major=`sed -n 's/.*\ssoftware.version="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
+        minor=`sed -n 's/.*\sversion="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
         version=$major-$minor
         echo "## $version ==> $minor"
         if [ "$minor" == "" ]
         then
             version=$major
         fi
-        software=`sed -n 's/.*\ssoftware="\(.*\)"\s*\\\*/\1/p' $p`
-        container=`sed -n 's/.*\scontainer="\(.*\)"\s*\\\*/\1/p' $p`
+        software=`sed -n 's/.*\ssoftware="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
+        container=`sed -n 's/.*\scontainer="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
         if [ "$container" == "" ]
         then
             echo "no container name, use software name"
