@@ -15,6 +15,11 @@ def send_comment(comment):
     }
     try:
         if os.environ['DRONE_BUILD_EVENT'] == 'pull_request':
+            headers = {
+                'Accept': 'application/vnd.github.v3.raw+json',
+                'Authorization': 'token ' + str(os.environ['GITHUB_STATUS_TOKEN'])
+            }
+
             github_url = 'https://api.github.com/repos/%s/issues/%s/comments' % (repo, os.environ['DRONE_PULL_REQUEST'])
         else:
             github_url = 'https://api.github.com/repos/%s/commits/%s/comments' % (repo, commit)
@@ -26,6 +31,9 @@ def send_comment(comment):
             headers=headers
         )
         logging.warn('Send comment info at %s: %s' % (github_url, str(res.status_code)))
+        if res.status_code != 201:
+            logging.warn(res.text)
+            logging.warn('Auth token need repo public access')
     except Exception as e:
         logging.exception(str(e))
 
