@@ -91,6 +91,25 @@ def payload():
             if drone_modified and event == 'pull_request':
                 logging.error('tried to modified .drone.yml or ci scripts in a pull request, forbidden:' + json.dumps(payload))
                 return "ko"
+            if not new_commits and 'GITHUB_STATUS_TOKEN' in os.environ:
+                    headers = {
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Authorization': 'token ' + str(os.environ['GITHUB_STATUS_TOKEN'])
+                    }
+                    if 'pull_request' in payload:
+                        github_url = payload['pull_request']['url'] + '/comments'
+                    else:
+                        github_url = payload['head_commit']['url'] + '/comments'
+                        
+                    res = requests.post(
+                        github_url,
+                        json={
+                            'body': 'no file modified, skipping request',
+                        },
+                        headers=headers
+                    )
+                    logging.warn('No commit to dispatch')
+
             for d in new_commits:
                 logging.debug('headers: '+str(request.headers))
                 logging.debug('data: '+json.dumps(new_commits[d]['payload']))
