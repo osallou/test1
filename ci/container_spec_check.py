@@ -14,7 +14,10 @@ def send_comment(comment):
         'Authorization': 'token ' + str(os.environ['GITHUB_STATUS_TOKEN'])
     }
     try:
-        github_url = 'https://api.github.com/repos/%s/commits/%s/comments' % (repo, commit)
+        if os.environ['DRONE_BUILD_EVENT'] == 'pull_request':
+            github_url = 'https://api.github.com/repos/%s/issues/%s/comments' % (repo, os.environ['DRONE_PULL_REQUEST'])
+        else:
+            github_url = 'https://api.github.com/repos/%s/commits/%s/comments' % (repo, commit)
         res = requests.post(
             github_url,
             json={
@@ -22,7 +25,7 @@ def send_comment(comment):
             },
             headers=headers
         )
-        logging.warn('Send status info at %s: %s' % (github_url, str(res.status_code)))
+        logging.warn('Send comment info at %s: %s' % (github_url, str(res.status_code)))
     except Exception as e:
         logging.exception(str(e))
 
@@ -133,11 +136,11 @@ try:
     biotools = None
     if 'biotools' in labels or 'BIOTOOLS' in labels:
         if 'biotools' in labels:
-            biotools = labels['biotools']
+            biotools = labels['biotools'].strip()
         else:
-            biotools = labels['BIOTOOLS']
+            biotools = labels['BIOTOOLS'].strip()
     else:
-        bio = requests.get('https://bio.tools/api/tool/' + str(entry) + '/?format=json')
+        bio = requests.get('https://bio.tools/api/tool/' + str(software) + '/?format=json')
         if bio.status_code != 404:
             send_comment('Found a biotools entry matching the software name (https://bio.tools/' + labels['software']+ '), if this is the same software, please add the bioools label to your Dockerfile')
         else:

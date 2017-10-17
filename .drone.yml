@@ -73,7 +73,7 @@ pipeline:
   s3:
     image: plugins/s3
     bucket: singularity
-    source: ci/img/*
+    source: ci/img/**/*
     target: /
     path_style: true
     endpoint: http://192.168.100.43:9000
