@@ -5,6 +5,26 @@ import os
 import logging
 import re
 
+def send_comment(comment):
+    repo = os.environ['DRONE_REPO']
+    commit = os.environ['DRONE_COMMIT_SHA']
+    headers = {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token ' + str(os.environ['GITHUB_STATUS_TOKEN'])
+    }
+    try:
+        github_url = 'https://api.github.com/repos/%s/commits/%s/comments' % (repo, commit)
+        res = requests.post(
+            github_url,
+            json={
+                'body': comment,
+            },
+            headers=headers
+        )
+        logging.warn('Send status info at %s: %s' % (github_url, str(res.status_code)))
+    except Exception as e:
+        logging.exception(str(e))
+
 def send_status(software, status, msg=None):
     repo = os.environ['DRONE_REPO']
     commit = os.environ['DRONE_COMMIT_SHA']
@@ -96,6 +116,50 @@ with open('DRONE_ENV', 'a') as content_file:
     content_file.write('SOFTWARE_NAME=' + labels['software'] + '\n')
 
 send_status(software, status, msg)
+
+try:
+    # license checks
+    spdx = requests.get('https://raw.githubusercontent.com/sindresorhus/spdx-license-list/master/spdx.json')
+    licenses = spdx.json()
+    if labels['license'].startsWith('http'):
+        send_comment('license field is a URL. license should be the license identifier (GPL-3.0 for example).')
+    if 'license_file' not in labels:
+        send_comment('please specify in license_file the location of the license file in the container, or a url to license for this release of the software.')
+    if labels['license'] not in licenses:
+        send_comment('license field is not in spdx list: https://spdx.org/licenses/, if it is a typo error, please fix it. If this is not a standard license, then ignore this message.')
+
+    # biotools check
+    biotools = None
+    if 'biotools' in labels or 'BIOTOOLS' in labels:
+        if 'biotools' in labels:
+            biotools = labels['biotools']
+        else:
+            biotools = labels['BIOTOOLS']
+    else:
+        bio = requests.get('https://bio.tools/api/tool/' + str(entry) + '/?format=json')
+        if bio.status_code != 404:
+            send_comment('Found a biotools entry matching the software name (https://bio.tools/' + labels['software']+ '), if this is the same software, please add the bioools label to your Dockerfile')
+        else:
+            send_comment('No biotools label defined, please check if tool is not already defined in biotools (https://bio.tools) and add biotools label if it exists. If it is not defined, you can ignore this comment.')
+
+    if biotools:
+        entry = biotools
+        if biotools.startswith('https://'):
+            entry = biotools.split('/')[-1]
+        bio = requests.get('https://bio.tools/api/tool/' + str(entry) + '/?format=json')
+        if bio.status_code == 404:
+            send_comment('Could not find the defined biotools entry, please check its name on biotools')
+        else:
+            logging.info("biotools entry is ok")
+
+    # Check if exists in conda
+    conda_url = 'https://bioconda.github.io/recipes/' + labels['software']+'/README.html'
+    conda = requests.get(conda_url)
+    if conda.status_code == 200:
+        send_comment('Found an existing bioconda package for this software (' + conda_url + '), is this the same, then you should update the recipe in bioconda to avoid duplicates.')
+
+except Exception as e:
+    logging.warn(str(e))
 
 with open('DRONE_ENV', 'r') as content_file:
     content = content_file.read()
