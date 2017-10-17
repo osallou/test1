@@ -75,7 +75,7 @@ if 'software' not in labels or not labels['software']:
     status = False
     msg.append('software label not present')
 
-software = labels['software']
+software = labels['software'].trim()
 
 pattern=re.compile("^([a-zA-Z0-9_-])+$")
 if pattern.match(software) is None:
@@ -113,7 +113,7 @@ if os.environ['DRONE_BUILD_EVENT'] == 'pull_request' or os.environ['DRONE_BRANCH
 
 with open('DRONE_ENV', 'a') as content_file:
     content_file.write('\nPLUGIN_TAG=' + version + '\n')
-    content_file.write('SOFTWARE_NAME=' + labels['software'] + '\n')
+    content_file.write('SOFTWARE_NAME=' + labels['software'].trim() + '\n')
 
 send_status(software, status, msg)
 
