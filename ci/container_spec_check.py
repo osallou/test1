@@ -6,6 +6,7 @@ import logging
 import re
 
 def send_comment(comment):
+    logging.warn('Send comment: %s' % (str(comment)))
     repo = os.environ['DRONE_REPO']
     commit = os.environ['DRONE_COMMIT_SHA']
     headers = {
@@ -121,7 +122,7 @@ try:
     # license checks
     spdx = requests.get('https://raw.githubusercontent.com/sindresorhus/spdx-license-list/master/spdx.json')
     licenses = spdx.json()
-    if labels['license'].startsWith('http'):
+    if labels['license'].startswith('http'):
         send_comment('license field is a URL. license should be the license identifier (GPL-3.0 for example).')
     if 'license_file' not in labels:
         send_comment('please specify in license_file the location of the license file in the container, or a url to license for this release of the software.')
