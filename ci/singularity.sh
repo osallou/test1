@@ -19,8 +19,8 @@ echo "From: $PLUGIN_REPO:$PLUGIN_TAG" >> Singularity
 
 cat Singularity
 echo "Convert docker image to singularity image"
-mkdir -p ci/img
+mkdir -p ci/img/${SOFTWARE_NAME}
 #export SINGULARITY_MESSAGELEVEL=-3
 #export PYTHONIOENCODING=UTF-8
-echo "/usr/local/bin/singularity -q build ci/img/${SOFTWARE_NAME}_${PLUGIN_TAG}.img Singularity"
-/usr/local/bin/singularity -q build ci/img/${SOFTWARE_NAME}_${PLUGIN_TAG}.img Singularity
+echo "/usr/local/bin/singularity -q build ci/img/${SOFTWARE_NAME}/${SOFTWARE_NAME}_${PLUGIN_TAG}.img Singularity"
+/usr/local/bin/singularity -q build ci/img/${SOFTWARE_NAME}/${SOFTWARE_NAME}_${PLUGIN_TAG}.img Singularity
