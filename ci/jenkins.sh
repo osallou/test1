@@ -14,6 +14,7 @@ do
     containerDir=${arrIN[0]}
     containerVersion=${arrIN[1]}
     dockerFile=$containerDir/$containerVersion/Dockerfile
+    echo "Check docker file exists: $dockerFile"
     if [ -e $dockerFile ];
     then
         IS_DOCKER_FILE=1
