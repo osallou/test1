@@ -5,17 +5,17 @@ set -e
 echo "Check modified files"
 git show --name-status $GIT_COMMIT | grep '^[MA]\s'  | sed -e 's/^[MA]\s*//g' | while read i; do echo $i ; done > /tmp/out
 cat /tmp/out
+rm -f BIOCONTAINERS_ENV
 IS_DOCKER_FILE=0
 while read p
 do
     echo "Check $p"
     curfile=`basename $p`
-    arrIN=(${curfile//\// })
+    arrIN=(${p//\// })
     containerDir=${arrIN[0]}
     containerVersion=${arrIN[1]}
     dockerFile=$containerDir/$containerVersion/Dockerfile
     echo "Check docker file exists: $dockerFile"
-    ls -l
     if [ -e $dockerFile ];
     then
         echo "ok, found a Dockerfile"
