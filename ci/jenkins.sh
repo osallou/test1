@@ -3,13 +3,13 @@
 set -e
 
 # Allow parameterized builds, if data already specified, skip this step
-if [ "a$CONTAINER" != "a" ]
+if [ "a$FORCE_CONTAINER" != "a" ]
 then
-    if [ "a$TOOL_VERSION" != "a" ]
+    if [ "a$FORCE_TOOL_VERSION" != "a" ]
     then
         echo "Parameterized build, skip this step and build $CONTAINER $TOOL_VERSION"
-        echo "CONTAINER=$CONTAINER" > BIOCONTAINERS_ENV
-        echo "TOOL_VERSION=$TOOL_VERSION" >> BIOCONTAINERS_ENV
+        echo "CONTAINER=$FORCE_CONTAINER" > BIOCONTAINERS_ENV
+        echo "TOOL_VERSION=$FORCE_TOOL_VERSION" >> BIOCONTAINERS_ENV
         exit 0
     fi
 fi
