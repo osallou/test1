@@ -15,8 +15,10 @@ do
     containerVersion=${arrIN[1]}
     dockerFile=$containerDir/$containerVersion/Dockerfile
     echo "Check docker file exists: $dockerFile"
+    ls -l
     if [ -e $dockerFile ];
     then
+        echo "ok, found a Dockerfile"
         IS_DOCKER_FILE=1
     fi
     software=`sed -n 's/.*\ssoftware="\(.*\)"\s*\\\*/\1/p' $p | tr -d '[:space:]'`
