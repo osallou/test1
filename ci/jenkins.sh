@@ -30,7 +30,8 @@ do
         software=$container
     fi
     echo "DOCKERFILE=$p" > BIOCONTAINERS_ENV
-    echo "CONTAINER=$software" >> BIOCONTAINERS_ENV
+    echo "LABEL_CONTAINER=$software" >> BIOCONTAINERS_ENV
+    echo "CONTAINER=$containerDir" >> BIOCONTAINERS_ENV
     echo "TOOL_VERSION=$containerVersion" >> BIOCONTAINERS_ENV
 done < /tmp/out
 
