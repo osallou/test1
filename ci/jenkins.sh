@@ -28,6 +28,7 @@ do
     fi
     echo "DOCKERFILE=$p" > BIOCONTAINERS_ENV
     echo "CONTAINER=$software" >> BIOCONTAINERS_ENV
+    echo "TOOL_VERSION=$containerVersion" >> BIOCONTAINERS_ENV
 done < /tmp/out
 
 if [ $IS_DOCKER_FILE == 0 ]
