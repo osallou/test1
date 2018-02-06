@@ -10,7 +10,7 @@ then
         echo "Parameterized build, skip this step and build $CONTAINER $TOOL_VERSION"
         echo "CONTAINER=$FORCE_CONTAINER" > BIOCONTAINERS_ENV
         echo "TOOL_VERSION=$FORCE_TOOL_VERSION" >> BIOCONTAINERS_ENV
-        echo "Build: $FORCE_CONTAINER/$FORCE_TOOL_VERSION"
+        echo "JenkinsBuild: $FORCE_CONTAINER/$FORCE_TOOL_VERSION"
         exit 0
     fi
 fi
@@ -60,7 +60,7 @@ do
     echo "TOOL_VERSION=$containerVersion" >> BIOCONTAINERS_ENV
 done < /tmp/out
 
-echo "Build: $FORCE_CONTAINER/$FORCE_TOOL_VERSION"
+echo "JenkinsBuild: $FORCE_CONTAINER/$FORCE_TOOL_VERSION"
 
 if [ $IS_DOCKER_FILE == 0 ]
 then
