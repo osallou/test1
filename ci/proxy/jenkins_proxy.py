@@ -34,7 +34,7 @@ def payload():
             if 'zen' in payload:
                 logging.debug('test url , accept and quit')
                 return 'test ok'
-            
+
             commits = []
             if 'commits' in payload:
                 commits = payload['commits']
@@ -96,7 +96,8 @@ def payload():
                         if new_commits[container_dir]['date'] > arrow.get(commit['timestamp']).datetime:
                             new_commits[container_dir] = {'date': arrow.get(commit['timestamp']).datetime, 'payload': commit_dict}
             event = request.headers['X-GitHub-Event']
-            if not new_commits and 'GITHUB_STATUS_TOKEN' in os.environ: headers = {
+            if not new_commits and 'GITHUB_STATUS_TOKEN' in os.environ:
+                    headers = {
                         'Accept': 'application/vnd.github.v3+json',
                         'Authorization': 'token ' + str(os.environ['GITHUB_STATUS_TOKEN'])
                     }
