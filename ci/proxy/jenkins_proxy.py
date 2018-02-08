@@ -11,6 +11,8 @@ import requests
 app = Flask(__name__)
 
 # jenkins_url = 'http://localhost:8080/job/'
+# may need auth: http://user:apikey@local....'
+# need to deactivare cross site forgery security in jenkins
 jenkins_url = 'http://cluster.local:30752/jenkins/job/'
 
 if 'JENKINS_URL' in os.environ and os.environ['JENKINS_URL']:
@@ -23,6 +25,10 @@ else:
 
 if 'GITHUB_STATUS_TOKEN' not in os.environ or not os.environ['GITHUB_STATUS_TOKEN']:
     logging.debug('no github token, proxy will not notify errors to github')
+
+@app.route('/ci-proxy', methods=['GET'])
+def ping():
+    return "pong"
 
 @app.route('/ci-proxy/hook', methods=['POST'])
 def payload():
@@ -119,8 +125,8 @@ def payload():
                 logging.debug('headers: '+str(request.headers))
                 logging.debug('data: '+json.dumps(new_commits[d]['payload']))
                 container_dir = d.split('/')
-                loggin.debug('Call:' + jenkins_url + 'container-testci/buildWithParameters?FORCE_CONTAINER='+container_dir[0]+'&FORCE_TOOL_VERSION='+container_dir[1]+'&FORCE_SHA1='+new_commits[d]['payload']['head_commit'])
-                r = requests.get(jenkins_url + 'container-testci/buildWithParameters?FORCE_CONTAINER='+container_dir[0]+'&FORCE_TOOL_VERSION='+container_dir[1]+'&FORCE_SHA1='+new_commits[d]['payload']['head_commit'])
+                logging.debug('Call:' + jenkins_url + 'container-testci/buildWithParameters?FORCE_CONTAINER='+container_dir[0]+'&FORCE_TOOL_VERSION='+container_dir[1]+'&FORCE_SHA1='+new_commits[d]['payload']['head_commit']['id'])
+                r = requests.get(jenkins_url + 'container-testci/buildWithParameters?FORCE_CONTAINER='+container_dir[0]+'&FORCE_TOOL_VERSION='+container_dir[1]+'&FORCE_SHA1='+new_commits[d]['payload']['head_commit']['id'])
                 logging.debug('post result '+str(r.status_code))
                 logging.debug(str(r.text))
                 # print(json.dumps(new_commits[d]['payload']))
