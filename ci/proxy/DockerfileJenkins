@@ -12,6 +12,6 @@ USER biocontainers
 
 WORKDIR /opt/biocontainers
 
-EXPOSE 8080
+EXPOSE 9080
 
 ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:9080", "jenkins_proxy:app"]
