@@ -10,21 +10,36 @@ import requests
 
 app = Flask(__name__)
 
-jenkins_url = 'http://localhost:8080/job/'
-if 'JENKINS_URL' in os.environ:
+# jenkins_url = 'http://localhost:8080/job/'
+jenkins_url = 'http://cluster.local:30752/jenkins/job/'
+
+if 'JENKINS_URL' in os.environ and os.environ['JENKINS_URL']:
     jenkins_url = os.environ['JENKINS_URL']
 
-@app.route('/hook', methods=['POST'])
+if 'DEBUG' in os.environ and os.environ['DEBUG'] == '1':
+    logging.basicConfig(level=logging.DEBUG)
+else:
+    logging.basicConfig(level=logging.INFO)
+
+if 'GITHUB_STATUS_TOKEN' not in os.environ or not os.environ['GITHUB_STATUS_TOKEN']:
+    logging.debug('no github token, proxy will not notify errors to github')
+
+@app.route('/ci-proxy/hook', methods=['POST'])
 def payload():
         # print(request.content_type)
         # print(str(request.form))
         # logging.error(request.form)
         try:
             payload = json.loads(request.form.get('payload'))
+            if 'zen' in payload:
+                logging.debug('test url , accept and quit')
+                return 'test ok'
+            
             commits = []
             if 'commits' in payload:
                 commits = payload['commits']
             elif 'pull_request' in payload:
+                logging.debug('pull request action: ' + payload['action'])
                 res = requests.get(
                     payload['pull_request']['url'] + '/files',
                     headers={'Accept': 'application/vnd.github.v3+json'}
@@ -81,8 +96,7 @@ def payload():
                         if new_commits[container_dir]['date'] > arrow.get(commit['timestamp']).datetime:
                             new_commits[container_dir] = {'date': arrow.get(commit['timestamp']).datetime, 'payload': commit_dict}
             event = request.headers['X-GitHub-Event']
-            if not new_commits and 'GITHUB_STATUS_TOKEN' in os.environ:
-                    headers = {
+            if not new_commits and 'GITHUB_STATUS_TOKEN' in os.environ: headers = {
                         'Accept': 'application/vnd.github.v3+json',
                         'Authorization': 'token ' + str(os.environ['GITHUB_STATUS_TOKEN'])
                     }
@@ -115,4 +129,4 @@ def payload():
 
 
 if __name__ == '__main__':
-          app.run(host='0.0.0.0')
+          app.run(host='0.0.0.0', port=8080)

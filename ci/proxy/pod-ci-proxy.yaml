@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: biocontainers-ci-proxy
+spec:
+  containers:
+  - name: ci-proxy
+    image: osallou/biocontainer-ci-proxy:latest
+    ports:
+    - containerPort: 8080
+    env:
+    - name: GITHUB_STATUS_TOKEN
+      value:
+    - name: DEBUG
+      value: 1
+    - name: JENKINS_URL
+      value:
+    -
