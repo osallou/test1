@@ -12,4 +12,4 @@ USER biocontainers
 
 WORKDIR /opt/biocontainers
 
-ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:9080", "drone_proxy:app"]
+ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8080", "drone_proxy:app"]
