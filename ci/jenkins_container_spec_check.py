@@ -72,7 +72,8 @@ if len(sys.argv) > 1 and sys.argv[1]:
     docker_file = sys.argv[1]
 
 if not docker_file or not os.path.exists(docker_file):
-    send_status(False, 'could not find any Dockerfile')
+    logging.error("Could not find Dockerfile "+str(docker_file))
+    send_status('',False, 'could not find any Dockerfile')
     sys.exit(1)
 
 with open(docker_file, 'r') as content_file:

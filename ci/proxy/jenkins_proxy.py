@@ -60,7 +60,7 @@ def payload():
                     logging.error("ko, can't modify multiple containers in a same pull request")
                     return "ko, can't modify multiple containers in a same pull request"
                 container_dir = containers[0].split('/')
-                r = requests.get(jenkins_url + 'container-testci-pr/buildWithParameters?FORCE_CONTAINER='+container_dir[0]+'&FORCE_TOOL_VERSION='+container_dir[1]+'&PULL_REQUEST_ID='+payload['number'])
+                r = requests.post(jenkins_url + 'container-testci-pr/buildWithParameters?FORCE_CONTAINER='+container_dir[0]+'&FORCE_TOOL_VERSION='+container_dir[1]+'&PULL_REQUEST_ID='+str(payload['number']) + '&FORCE_SHA1=' + payload['pull_request']['head']['sha'])
                 return "ok"
 
             new_commits = {}
