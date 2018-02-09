@@ -6,6 +6,11 @@ import logging
 import re
 
 def send_comment(comment):
+    if 'GITHUB_STATUS_TOKEN' not in os.environ:
+        logging.info(str({
+            'comment': str(comment),
+        }))
+        return
     logging.warn('Send comment: %s' % (str(comment)))
     repo = 'BioContainers/containers'
     commit = os.environ['COMMIT_SHA1']
@@ -38,6 +43,13 @@ def send_comment(comment):
         logging.exception(str(e))
 
 def send_status(software, status, msg=None):
+    if 'GITHUB_STATUS_TOKEN' not in os.environ:
+        logging.info(str({
+            'software': str(software),
+            'status': str(status),
+            'msg': str(msg)
+        }))
+        return
     repo = 'BioContainers/containers'
     commit = os.environ['COMMIT_SHA1']
     info = 'Checking recipe metadata'
@@ -142,7 +154,7 @@ try:
     else:
         bio = requests.get('https://bio.tools/api/tool/' + str(software) + '/?format=json')
         if bio.status_code != 404:
-            send_comment('Found a biotools entry matching the software name (https://bio.tools/' + labels['software']+ '), if this is the same software, please add the bioools label to your Dockerfile')
+            send_comment('Found a biotools entry matching the software name (https://bio.tools/' + labels['software']+ '), if this is the same software, please add the biotools label to your Dockerfile')
         else:
             send_comment('No biotools label defined, please check if tool is not already defined in biotools (https://bio.tools) and add biotools label if it exists. If it is not defined, you can ignore this comment.')
 
